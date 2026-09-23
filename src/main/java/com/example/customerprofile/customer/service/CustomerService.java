@@ -1,5 +1,5 @@
 package com.example.customerprofile.customer.service;
-
+import com.example.customerprofile.customer.dto.CustomerProfileUpdateRequest;
 import com.example.customerprofile.customer.dto.CustomerProfileResponse;
 import com.example.customerprofile.customer.entity.Customer;
 import com.example.customerprofile.customer.exception.CustomerNotFoundException;
@@ -27,4 +27,28 @@ public class CustomerService {
                 customer.getPhoto()
         );
     }
+
+    public CustomerProfileResponse updateCustomerProfile(
+            Long id,
+            CustomerProfileUpdateRequest request) {
+
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException(id));
+
+        customer.updateProfile(
+                request.getName(),
+                request.getEmail(),
+                request.getPhoto()
+        );
+
+        Customer updatedCustomer = customerRepository.save(customer);
+
+        return new CustomerProfileResponse(
+                updatedCustomer.getId(),
+                updatedCustomer.getName(),
+                updatedCustomer.getEmail(),
+                updatedCustomer.getPhoto()
+        );
+    }
+
 }
