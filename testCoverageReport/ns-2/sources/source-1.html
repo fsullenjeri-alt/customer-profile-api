@@ -1,0 +1,185 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > DataSeeder</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.customerprofile.config</a>
+</div>
+
+<h1>Coverage Summary for Class: DataSeeder (com.example.customerprofile.config)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DataSeeder</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.customerprofile.config;
+&nbsp;
+&nbsp;import com.example.customerprofile.customer.entity.Customers;
+&nbsp;import com.example.customerprofile.customer.repository.CustomerRepository;
+&nbsp;import lombok.AllArgsConstructor;
+&nbsp;import lombok.extern.slf4j.Slf4j;
+&nbsp;import org.springframework.boot.CommandLineRunner;
+&nbsp;import org.springframework.stereotype.Component;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Locale;
+&nbsp;import java.util.concurrent.ThreadLocalRandom;
+&nbsp;import java.util.stream.IntStream;
+&nbsp;
+&nbsp;/**
+&nbsp; * Inserts 10 random customers on startup, but only when the table is empty,
+&nbsp; * so restarting the app does not keep adding more.
+&nbsp; */
+<b class="fc">&nbsp;@Slf4j</b>
+&nbsp;@Component
+&nbsp;@AllArgsConstructor
+&nbsp;public class DataSeeder implements CommandLineRunner {
+&nbsp;
+&nbsp;    private static final int CUSTOMER_COUNT = 10;
+&nbsp;
+<b class="fc">&nbsp;    private static final List&lt;String&gt; FIRST_NAMES = List.of(</b>
+&nbsp;            &quot;Ann&quot;, &quot;John&quot;, &quot;Maria&quot;, &quot;David&quot;, &quot;Sara&quot;, &quot;Luca&quot;, &quot;Elena&quot;, &quot;Omar&quot;,
+&nbsp;            &quot;Nina&quot;, &quot;Marco&quot;, &quot;Julia&quot;, &quot;Adam&quot;, &quot;Sofia&quot;, &quot;Leo&quot;, &quot;Emma&quot;, &quot;Noah&quot;);
+&nbsp;
+<b class="fc">&nbsp;    private static final List&lt;String&gt; LAST_NAMES = List.of(</b>
+&nbsp;            &quot;Smith&quot;, &quot;Rossi&quot;, &quot;Brown&quot;, &quot;Garcia&quot;, &quot;Muller&quot;, &quot;Hoxha&quot;, &quot;Wilson&quot;,
+&nbsp;            &quot;Martin&quot;, &quot;Lopez&quot;, &quot;Taylor&quot;, &quot;Bianchi&quot;, &quot;Clark&quot;, &quot;Lee&quot;, &quot;Walker&quot;);
+&nbsp;
+<b class="fc">&nbsp;    private static final List&lt;String&gt; DOMAINS = List.of(</b>
+&nbsp;            &quot;example.com&quot;, &quot;mail.com&quot;, &quot;test.org&quot;);
+&nbsp;
+&nbsp;    private final CustomerRepository customerRepository;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void run(String... args) {
+<b class="fc">&nbsp;        if (customerRepository.count() &gt; 0) {</b>
+<b class="fc">&nbsp;            log.info(&quot;Customers table already has data, skipping seeding&quot;);</b>
+&nbsp;            return;
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        List&lt;Customers&gt; customers = IntStream.rangeClosed(1, CUSTOMER_COUNT)</b>
+<b class="fc">&nbsp;                .mapToObj(this::randomCustomer)</b>
+<b class="fc">&nbsp;                .toList();</b>
+&nbsp;
+<b class="fc">&nbsp;        customerRepository.saveAll(customers);</b>
+<b class="fc">&nbsp;        log.info(&quot;Seeded {} random customers&quot;, customers.size());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private Customers randomCustomer(int index) {
+<b class="fc">&nbsp;        String firstName = pick(FIRST_NAMES);</b>
+<b class="fc">&nbsp;        String lastName = pick(LAST_NAMES);</b>
+&nbsp;
+&nbsp;        // index keeps emails unique even if the same name is picked twice
+<b class="fc">&nbsp;        String email = &quot;%s.%s%d@%s&quot;.formatted(firstName, lastName, index, pick(DOMAINS))</b>
+<b class="fc">&nbsp;                .toLowerCase(Locale.ROOT);</b>
+<b class="fc">&nbsp;        String photo = &quot;https://i.pravatar.cc/150?img=&quot; + ThreadLocalRandom.current().nextInt(1, 71);</b>
+&nbsp;
+<b class="fc">&nbsp;        return new Customers(null, firstName + &quot; &quot; + lastName, email, photo);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private static &lt;T&gt; T pick(List&lt;T&gt; values) {
+<b class="fc">&nbsp;        return values.get(ThreadLocalRandom.current().nextInt(values.size()));</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-09-24 22:20</div>
+</div>
+</body>
+</html>

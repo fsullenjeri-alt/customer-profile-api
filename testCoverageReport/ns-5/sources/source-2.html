@@ -1,0 +1,106 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CustomerMapper</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.customerprofile.customer.mapper</a>
+</div>
+
+<h1>Coverage Summary for Class: CustomerMapper (com.example.customerprofile.customer.mapper)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">CustomerMapper$MockitoMock$5pSks35u</td>
+  </tr>
+  <tr>
+    <td class="name">CustomerMapper$MockitoMock$5pSks35u$auxiliary$b0LOiRf1</td>
+  </tr>
+  <tr>
+    <td class="name">CustomerMapper$MockitoMock$5pSks35u$auxiliary$kGDUWysl</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.customerprofile.customer.mapper;
+&nbsp;
+&nbsp;import com.example.customerprofile.customer.dto.CustomerProfileCreateRequest;
+&nbsp;import com.example.customerprofile.customer.dto.CustomerProfileResponse;
+&nbsp;import com.example.customerprofile.customer.dto.CustomerProfileUpdateRequest;
+&nbsp;import com.example.customerprofile.customer.entity.Customers;
+&nbsp;import org.mapstruct.BeanMapping;
+&nbsp;import org.mapstruct.Mapper;
+&nbsp;import org.mapstruct.Mapping;
+&nbsp;import org.mapstruct.MappingTarget;
+&nbsp;import org.mapstruct.NullValuePropertyMappingStrategy;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Mapper
+&nbsp;public interface CustomerMapper {
+&nbsp;
+&nbsp;    CustomerProfileResponse toResponse(Customers customers);
+&nbsp;
+&nbsp;    List&lt;CustomerProfileResponse&gt; toResponseList(List&lt;Customers&gt; customers);
+&nbsp;
+&nbsp;    @Mapping(target = &quot;id&quot;, ignore = true)
+&nbsp;    Customers toEntity(CustomerProfileCreateRequest request);
+&nbsp;
+&nbsp;    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+&nbsp;    @Mapping(target = &quot;id&quot;, ignore = true)
+&nbsp;    void updateFromRequest(CustomerProfileUpdateRequest request, @MappingTarget Customers customers);
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-09-24 22:20</div>
+</div>
+</body>
+</html>

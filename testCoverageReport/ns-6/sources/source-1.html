@@ -1,0 +1,175 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CustomerService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.customerprofile.customer.service</a>
+</div>
+
+<h1>Coverage Summary for Class: CustomerService (com.example.customerprofile.customer.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CustomerService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (14/14)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.customerprofile.customer.service;
+&nbsp;
+&nbsp;import com.example.customerprofile.customer.dto.CustomerProfileCreateRequest;
+&nbsp;import com.example.customerprofile.customer.dto.CustomerProfileUpdateRequest;
+&nbsp;import com.example.customerprofile.customer.dto.CustomerProfileResponse;
+&nbsp;import com.example.customerprofile.customer.entity.Customers;
+&nbsp;import com.example.customerprofile.customer.exception.CustomerNotFoundException;
+&nbsp;import com.example.customerprofile.customer.mapper.CustomerMapper;
+&nbsp;import com.example.customerprofile.customer.repository.CustomerRepository;
+&nbsp;import lombok.AllArgsConstructor;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;import org.springframework.cache.annotation.Cacheable;
+&nbsp;import org.springframework.cache.annotation.CacheEvict;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Service
+&nbsp;@AllArgsConstructor
+&nbsp;public class CustomerService {
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private final CustomerRepository customerRepository;
+&nbsp;    @Autowired
+&nbsp;    private final CustomerMapper customerMapper;
+&nbsp;
+&nbsp;    public List&lt;CustomerProfileResponse&gt; getAllCustomerProfiles() {
+<b class="fc">&nbsp;        return customerMapper.toResponseList(customerRepository.findAll());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Cacheable(value = &quot;customerProfiles&quot;, key = &quot;#id&quot;)
+&nbsp;    public CustomerProfileResponse getCustomerProfile(Long id) {
+&nbsp;
+<b class="fc">&nbsp;        Customers customers = customerRepository.findById(id)</b>
+<b class="fc">&nbsp;                .orElseThrow(() -&gt; new CustomerNotFoundException(id));</b>
+&nbsp;
+<b class="fc">&nbsp;        return customerMapper.toResponse(customers);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public CustomerProfileResponse createCustomerProfile(CustomerProfileCreateRequest request) {
+&nbsp;
+<b class="fc">&nbsp;        Customers savedCustomers = customerRepository.save(customerMapper.toEntity(request));</b>
+&nbsp;
+<b class="fc">&nbsp;        return customerMapper.toResponse(savedCustomers);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @CacheEvict(value = &quot;customerProfiles&quot;, key = &quot;#id&quot;)
+&nbsp;    public CustomerProfileResponse updateCustomerProfile(
+&nbsp;            Long id,
+&nbsp;            CustomerProfileUpdateRequest request) {
+&nbsp;
+<b class="fc">&nbsp;        Customers customers = customerRepository.findById(id)</b>
+<b class="fc">&nbsp;                .orElseThrow(() -&gt; new CustomerNotFoundException(id));</b>
+&nbsp;
+<b class="fc">&nbsp;        customerMapper.updateFromRequest(request, customers);</b>
+&nbsp;
+<b class="fc">&nbsp;        Customers updatedCustomers = customerRepository.save(customers);</b>
+&nbsp;
+<b class="fc">&nbsp;        return customerMapper.toResponse(updatedCustomers);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @CacheEvict(value = &quot;customerProfiles&quot;, key = &quot;#id&quot;)
+&nbsp;    public void deleteCustomerProfile(Long id) {
+&nbsp;
+<b class="fc">&nbsp;        Customers customers = customerRepository.findById(id)</b>
+<b class="fc">&nbsp;                .orElseThrow(() -&gt; new CustomerNotFoundException(id));</b>
+&nbsp;
+<b class="fc">&nbsp;        customerRepository.delete(customers);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-09-24 22:20</div>
+</div>
+</body>
+</html>
