@@ -1,10 +1,13 @@
 package com.example.customerprofile.customer.controller;
 
+import com.example.customerprofile.customer.dto.CustomerProfileCreateRequest;
 import com.example.customerprofile.customer.dto.CustomerProfileResponse;
+import com.example.customerprofile.customer.dto.CustomerProfileUpdateRequest;
 import com.example.customerprofile.customer.service.CustomerService;
-import org.springframework.web.bind.annotation.*
-        ;import com.example.customerprofile.customer.dto.CustomerProfileUpdateRequest;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -16,17 +19,37 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping("/{id}")
-    public CustomerProfileResponse getCustomerProfile(@PathVariable Long id) {
-        return customerService.getCustomerProfile(id);
+    @GetMapping
+    public ResponseEntity<List<CustomerProfileResponse>> getAllCustomerProfiles() {
+        return ResponseEntity.ok(customerService.getAllCustomerProfiles());
     }
 
-    @PutMapping("/{id}")
-    public CustomerProfileResponse updateCustomerProfile(
+    @GetMapping("/{id}")
+    public ResponseEntity<CustomerProfileResponse> getCustomerProfile(@PathVariable Long id) {
+        return ResponseEntity.ok(customerService.getCustomerProfile(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<CustomerProfileResponse> createCustomerProfile(
+            @Valid @RequestBody CustomerProfileCreateRequest request) {
+
+        CustomerProfileResponse response = customerService.createCustomerProfile(request);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<CustomerProfileResponse> updateCustomerProfile(
             @PathVariable Long id,
             @Valid @RequestBody CustomerProfileUpdateRequest request) {
 
-        return customerService.updateCustomerProfile(id, request);
+        return ResponseEntity.ok(customerService.updateCustomerProfile(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCustomerProfile(@PathVariable Long id) {
+        customerService.deleteCustomerProfile(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

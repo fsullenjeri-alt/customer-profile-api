@@ -1,0 +1,197 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CustomerMapperImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.customerprofile.customer.mapper</a>
+</div>
+
+<h1>Coverage Summary for Class: CustomerMapperImpl (com.example.customerprofile.customer.mapper)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CustomerMapperImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (16/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (29/29)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.customerprofile.customer.mapper;
+&nbsp;
+&nbsp;import com.example.customerprofile.customer.dto.CustomerProfileCreateRequest;
+&nbsp;import com.example.customerprofile.customer.dto.CustomerProfileResponse;
+&nbsp;import com.example.customerprofile.customer.dto.CustomerProfileUpdateRequest;
+&nbsp;import com.example.customerprofile.customer.entity.Customers;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import javax.annotation.processing.Generated;
+&nbsp;import org.springframework.stereotype.Component;
+&nbsp;
+&nbsp;@Generated(
+&nbsp;    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+&nbsp;    date = &quot;2026-09-24T22:15:56+0200&quot;,
+&nbsp;    comments = &quot;version: 1.6.3, compiler: javac, environment: Java 27 (Oracle Corporation)&quot;
+&nbsp;)
+&nbsp;@Component
+<b class="fc">&nbsp;public class CustomerMapperImpl implements CustomerMapper {</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public CustomerProfileResponse toResponse(Customers customers) {
+<b class="fc">&nbsp;        if ( customers == null ) {</b>
+<b class="fc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        CustomerProfileResponse customerProfileResponse = new CustomerProfileResponse();</b>
+&nbsp;
+<b class="fc">&nbsp;        customerProfileResponse.setId( customers.getId() );</b>
+<b class="fc">&nbsp;        customerProfileResponse.setName( customers.getName() );</b>
+<b class="fc">&nbsp;        customerProfileResponse.setEmail( customers.getEmail() );</b>
+<b class="fc">&nbsp;        customerProfileResponse.setPhoto( customers.getPhoto() );</b>
+&nbsp;
+<b class="fc">&nbsp;        return customerProfileResponse;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public List&lt;CustomerProfileResponse&gt; toResponseList(List&lt;Customers&gt; customers) {
+<b class="fc">&nbsp;        if ( customers == null ) {</b>
+<b class="fc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        List&lt;CustomerProfileResponse&gt; list = new ArrayList&lt;CustomerProfileResponse&gt;( customers.size() );</b>
+<b class="fc">&nbsp;        for ( Customers customers1 : customers ) {</b>
+<b class="fc">&nbsp;            list.add( toResponse( customers1 ) );</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return list;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Customers toEntity(CustomerProfileCreateRequest request) {
+<b class="fc">&nbsp;        if ( request == null ) {</b>
+<b class="fc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        Customers customers = new Customers();</b>
+&nbsp;
+<b class="fc">&nbsp;        customers.setName( request.getName() );</b>
+<b class="fc">&nbsp;        customers.setEmail( request.getEmail() );</b>
+<b class="fc">&nbsp;        customers.setPhoto( request.getPhoto() );</b>
+&nbsp;
+<b class="fc">&nbsp;        return customers;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void updateFromRequest(CustomerProfileUpdateRequest request, Customers customers) {
+<b class="fc">&nbsp;        if ( request == null ) {</b>
+&nbsp;            return;
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if ( request.getName() != null ) {</b>
+<b class="fc">&nbsp;            customers.setName( request.getName() );</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if ( request.getEmail() != null ) {</b>
+<b class="fc">&nbsp;            customers.setEmail( request.getEmail() );</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if ( request.getPhoto() != null ) {</b>
+<b class="fc">&nbsp;            customers.setPhoto( request.getPhoto() );</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-09-24 22:20</div>
+</div>
+</body>
+</html>
