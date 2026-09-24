@@ -2,34 +2,26 @@ package com.example.customerprofile.customer.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Validated
 public class CustomerProfileUpdateRequest {
 
-    @NotBlank(message = "Name is required")
+    @Pattern(regexp = ".*\\S.*", message = "Name must not be blank")
     private String name;
 
-    @NotBlank(message = "Email is required")
+    @Pattern(regexp = ".*\\S.*", message = "Email must not be blank")
     @Email(message = "Email must be valid")
     private String email;
 
-    @NotBlank(message = "Photo is required")
+    @Pattern(regexp = ".*\\S.*", message = "Photo must not be blank")
     private String photo;
 
-    public CustomerProfileUpdateRequest(String name, String email, String photo) {
-        this.name = name;
-        this.email = email;
-        this.photo = photo;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
 }
